@@ -1,7 +1,7 @@
-defmodule AptosDappEx.AccountsFixtures do
+defmodule DappEx.AccountsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `AptosDappEx.Accounts` context.
+  entities via the `DappEx.Accounts` context.
   """
 
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
@@ -18,7 +18,7 @@ defmodule AptosDappEx.AccountsFixtures do
     {:ok, user} =
       attrs
       |> valid_user_attributes()
-      |> AptosDappEx.Accounts.register_user()
+      |> DappEx.Accounts.register_user()
 
     user
   end

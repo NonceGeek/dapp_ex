@@ -1,4 +1,4 @@
-defmodule AptosDappEx.Repo.Migrations.CreateUsersAuthTables do
+defmodule DappEx.Repo.Migrations.CreateUsersAuthTables do
   use Ecto.Migration
 
   def change do

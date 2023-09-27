@@ -1,0 +1,22 @@
+<nav class="bg-white border-gray-200 px-2 sm:px-10 py-2.5 rounded ">
+  <div class="flex flex-wrap justify-between items-center mx-auto">
+    <div class="flex">
+      <a href="/" class="flex items-center">
+        <span class="self-center text-xl font-semibold whitespace-nowrap text-blue-600">Noncegeek</span>
+      </a>
+
+    </div>
+
+    <div class="flex items-center space-x-2">
+      <button
+        class="text-white bg-blue-600 font-bold hover:bg-blue-700 rounded-lg p-2 dark:text-white"
+        phx-click={show_wallet_modal()}
+      >
+        + Connect Wallet
+      </button>
+        <.modal id="wallet-modal">
+          <%= live_render(@conn, DappExWeb.WalletLive, id: "connect", session: %{"id" => "wallet-connect", "text" => "Log in with Petra Wallet"}) %>
+        </.modal>
+    </div>
+  </div>
+</nav>
