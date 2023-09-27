@@ -1,4 +1,4 @@
-defmodule PetalBoilerplateWeb.ConnCase do
+defmodule AptosDappExWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule PetalBoilerplateWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use PetalBoilerplateWeb.ConnCase, async: true`, although
+  by setting `use AptosDappExWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -20,19 +20,45 @@ defmodule PetalBoilerplateWeb.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint PetalBoilerplateWeb.Endpoint
+      @endpoint AptosDappExWeb.Endpoint
 
-      use PetalBoilerplateWeb, :verified_routes
+      use AptosDappExWeb, :verified_routes
 
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import PetalBoilerplateWeb.ConnCase
+      import AptosDappExWeb.ConnCase
     end
   end
 
   setup tags do
-    PetalBoilerplate.DataCase.setup_sandbox(tags)
+    AptosDappEx.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
+  end
+
+  @doc """
+  Setup helper that registers and logs in users.
+
+      setup :register_and_log_in_user
+
+  It stores an updated connection and a registered user in the
+  test context.
+  """
+  def register_and_log_in_user(%{conn: conn}) do
+    user = AptosDappEx.AccountsFixtures.user_fixture()
+    %{conn: log_in_user(conn, user), user: user}
+  end
+
+  @doc """
+  Logs the given `user` into the `conn`.
+
+  It returns an updated `conn`.
+  """
+  def log_in_user(conn, user) do
+    token = AptosDappEx.Accounts.generate_user_session_token(user)
+
+    conn
+    |> Phoenix.ConnTest.init_test_session(%{})
+    |> Plug.Conn.put_session(:user_token, token)
   end
 end
